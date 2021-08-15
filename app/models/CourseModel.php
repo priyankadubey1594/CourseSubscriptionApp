@@ -11,7 +11,7 @@ class CourseModel {
 		$courseDetails = (!empty($formData['courseDetails']) ? $formData['courseDetails'] : '');
 		try {
 			// Set SQL
-			$sql = 'INSERT INTO courses (courseName, courseDetails, createdOn) VALUES (:courseName, :courseDetails, NOW())';
+			$sql = 'INSERT INTO coursess (courseName, courseDetails, createdOn) VALUES (:courseName, :courseDetails, NOW())';
 			// Prepare query
 			$statement = $this->dbHandler->prepare($sql);
 			// Execute query

@@ -25,10 +25,6 @@ class Student extends Controller{
 			}
 
 			return $this->view('student/update-student-details', $result);
-
-			// $res = $this->studentModel->getStudent($id);
-			// $result = array('message'=>'found', 'data' => $res);
-			// return $this->view('student/update-student-details', $result);
 		}
 		$this->view('student/update-student-details');
 	}
@@ -36,17 +32,15 @@ class Student extends Controller{
 	public function register () {
 		//echo "Student registered";
 		if(isset($_POST)) {
-			try {
+			$res = $this->studentModel->register($_POST);
 				$res = $this->studentModel->register($_POST);
-				if($res  != true){
-					throw new Exception("Error Processing Request", 1);
+				$registered = null;
+				if($res  === true){
+					$registered = "registered";
+				} else {
+					$registered = "not registered";
 				}
-				$result = array('message'=>'registered', 'data' => $res);
-				
-			} catch (Exception $e) {
-				$result = array('message'=>'Error'.$e->getMessage(), 'data' => $res);
-			}
-			
+				$result = array('message'=>$registered, 'data' => $res);	 
 			return $this->view('student/student-registration', $result);
 		}
 		return $this->view('student/student-registration');
@@ -106,7 +100,8 @@ class Student extends Controller{
 		if(isset($_POST)) {
 			try {
 				$updated= null;
-				if($this->studentModel->updateStudent($_POST)){
+				$res = $this->studentModel->updateStudent($_POST);
+				if($res === true){
 					$updated = 'updated';
 				} else {
 					$updated = 'not updated';

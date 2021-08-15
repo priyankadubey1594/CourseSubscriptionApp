@@ -29,15 +29,15 @@ class Course extends Controller{
 	public function addCourse () {
 		//echo "Student registered";
 		if(isset($_POST)) {
-			try {
+			
 				$res = $this->CourseModel->addCourse($_POST);
-				if($res != true) {
-					throw new Exception("Error Processing Request", 1);
+				$added = null;
+				if($res === true) {
+					$added = 'added';
+				} else {
+					$added = 'not added';
 				}
-				$result = array('message'=>'added', 'data' => $res);
-			} catch (Exception $e) {
-				$result = array('message'=>'Error:'.$e->getMessage(), 'data' => $res);
-			}
+				$result = array('message'=>$added, 'data' => $res);
 			return $this->view('course/add-course', $result);
 		}
 		return $this->view('course/add-course');
@@ -66,8 +66,6 @@ class Course extends Controller{
 				if(!$this->CourseModel->deleteCourse($id)) {
 					$res = $this->CourseModel->getCourses();
 					$deleted = 'Error';
-				} else{
-					$deleted = 'deleted';
 				}
 				$res = $this->CourseModel->getCourses();
 				if(gettype($res) != 'array'){

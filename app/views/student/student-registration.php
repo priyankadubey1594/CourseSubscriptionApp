@@ -1,4 +1,4 @@
-<?php require_once APPROOT.'/views/includes/header.php';?>
+<?php require_once APPROOT.'/views/includes/header.php'; var_dump($data);?>
 	<div class="container">
 		<div class="float-left" style="margin-bottom: 40px;"><span><a href="../index.php">Home</a></span></div>
 		<div class="jumbotron text-center" style="margin-top: 80px;">
