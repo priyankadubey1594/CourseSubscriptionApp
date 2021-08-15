@@ -3,11 +3,17 @@
 		<div class="float-left" style="margin-bottom: 40px;"><span><a href="../index.php">Home</a></span></div>
 		<div class="jumbotron text-center" style="margin-top: 80px;">
 			<?php
-			if( isset($data['message']) && $data['message']=='deleted') {
-				echo "<div class='alert alert-success' role='alert' id='success'>Course deleted successfully.</div>";
-			}
-			if(isset($data['message']) && $data['message']=='updated') {
-				echo "<div class='alert alert-success' role='alert' id='success'>Course details updated successfully.</div>";
+			if( isset($data['message'])) {
+				if($data['message']=='deleted'){
+					echo "<div class='alert alert-success' role='alert' id='success'>Course deleted successfully.</div>";
+				} else if($data['message']=='not deleted'){
+					echo "<div class='alert alert-danger' role='alert' id='success'>Something went wrong while deleting the course.</div>";
+				}else if($data['message']=='updated'){
+					echo "<div class='alert alert-success' role='alert' id='success'>Course details updated successfully.</div>";
+				} else if($data['message']=='not updated'){
+					echo "<div class='alert alert-danger' role='alert' id='success'>Something went wrong while updating the course.</div>";
+				}
+				
 			}
 			?>
 			<div class="header" style="padding-bottom: 30px;padding-top: 30px;">

@@ -63,9 +63,11 @@ class Course extends Controller{
 			$id = $_GET['courseId'];
 			try {
 				$deleted =  null;
-				if(!$this->CourseModel->deleteCourse($id)) {
-					$res = $this->CourseModel->getCourses();
-					$deleted = 'Error';
+				$res = $this->CourseModel->deleteCourse($id);
+				if($res === true) {
+					$deleted = 'deleted';
+				} else {
+					$deleted = 'not deleted';
 				}
 				$res = $this->CourseModel->getCourses();
 				if(gettype($res) != 'array'){
@@ -85,10 +87,11 @@ class Course extends Controller{
 		if(isset($_POST)) {
 			try {
 				$updated = null;
-				if(!$this->CourseModel->updateCourse($_POST)) {
-					$updated = 'Error';
-				} else {
+				$res = $this->CourseModel->updateCourse($_POST);
+				if($res === true) {
 					$updated = 'updated';
+				} else {
+					$updated = 'not updated';
 				}
 				$res = $this->CourseModel->getCourses();
 				if(gettype($res) != 'array') {

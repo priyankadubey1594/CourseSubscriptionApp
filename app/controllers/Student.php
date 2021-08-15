@@ -76,13 +76,15 @@ class Student extends Controller{
 			$id = $_GET['studentId'];
 			try {
 				$deleted = null;
-				if($this->studentModel->deleteStudent($id)){
+				$res = $this->studentModel->deleteStudent($id);
+				if($res === true){
 					$deleted = 'deleted';
 				} else{
 					$deleted = 'not deleted';
 				}
 				$res = $this->studentModel->getStudents();
 				if(gettype($res) != 'array') {
+					echo "inside loop";
 					throw new Exception("Error Processing Request", 1);	
 				}
 				$result = array('message'=>$deleted, 'data' => $res);

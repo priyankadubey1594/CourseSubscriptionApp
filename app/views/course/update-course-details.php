@@ -1,20 +1,10 @@
-<?php require_once APPROOT.'/views/includes/header.php';?>
+<?php require_once APPROOT.'/views/includes/header.php'; var_dump($data['message']);?>
 	<div class="container">
 		<div class="float-left" style="margin-bottom: 40px;"><span><a href="../index.php">Home</a></span></div>
 		<div class="jumbotron text-center" style="margin-top: 80px;">
 			<div class="header" style="padding-bottom: 30px;padding-top: 30px;">
 				<h5 class="text-center"> Update Course Details</h5>
 			</div>
-			<?php
-			if(isset($data['message'])){
-				if($data['message'] == 'updated'){
-					echo "<div class='alert alert-success' role='alert' id='success'>Course updated successfully.</div>";
-				} else if($data['message'] == 'not updated'){
-					echo "<div class='alert alert-danger' role='alert' id='success'>Something went wrong while updating the course.</div>";
-				}
-				
-			}
-			?>
 			<div>
 			<form id="courseForm" method="POST" action="update">
 			<?php
