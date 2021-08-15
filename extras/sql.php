@@ -4,7 +4,7 @@
 $query = "create database if not exists SCR";
 
 //query to create students table 
-$query = "create table students (id int AUTO_INCREMENT PRIMARY KEY, firstName varchar(20), lastName varchar(20), dob date, contact int, createdOn datetime, updatedOn timestamp, UNIQUE `unique_index`(`firstName`, `lastName`))" ;
+$query = "create table students (id int AUTO_INCREMENT PRIMARY KEY, firstName varchar(20), lastName varchar(20), dob date, contact varchar(15), createdOn datetime, updatedOn timestamp, UNIQUE `unique_index`(`firstName`, `lastName`))" ;
 
 //query to create courses table
 $query = "create table courses(id int AUTO_INCREMENT PRIMARY KEY, courseName varchar(20), courseDetails varchar(200), createdOn datetime, updatedOn timestamp, UNIQUE `unique_course` (`courseName`))";
