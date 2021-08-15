@@ -11,7 +11,7 @@
 				<h5 class="text-center">Student Course Subcription</h5>
 			</div>
 			<div>
-			<form id="courseForm" method="POST" action="subscribe">
+			<form id="subscriptionForm" method="POST" action="subscribe">
 			  <div class="row">
 			  	<div class="col-sm-5">
 				    <label for="courseName">Student Name</label>
@@ -19,7 +19,7 @@
 			  	<div class="col-sm-7">
 			  		<div class="form-group">
 					    <select class="form-control" id="studentId" name="studentId" style="width: 70%;">
-					    	<option>Select a students</option>
+					    	<option value="">Select a students</option>
 					    	<?php
 					    	foreach ($data['students'] as $student) {
 					    		echo '<option value="'.$student[0].'">'.$student[1].' '.$student[2].'</option>';
@@ -38,7 +38,7 @@
 			  	<div class="col-sm-7">
 			  		<div class="form-group">
 					    <select class="form-control" id="courseId" name="courseId" style="width: 70%;">
-					    	<!-- <option value="">Select a course</option> -->
+					    	<option value="">Select a course</option>
 					    	<?php
 					    	foreach ($data['courses'] as $course) {
 					    		echo '<option value="'.$course[0].'">'.$course[1].'</option>';

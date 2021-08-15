@@ -18,7 +18,7 @@ class CourseModel {
 			$statement->execute(array(':courseName' => $courseName, ':courseDetails' => $courseDetails));
 			return true;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 	}
 
@@ -30,7 +30,7 @@ class CourseModel {
 			$row = $statement->fetchAll();
 			return $row;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 
 	}
@@ -43,7 +43,7 @@ class CourseModel {
 			$row = $statement->fetchAll();
 			return $row;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 
 	}
@@ -55,7 +55,7 @@ class CourseModel {
 			$statement->execute(array(':id' => $id));
 			return true;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 	}
 
@@ -67,10 +67,9 @@ class CourseModel {
 		try {
 			$statement = $this->dbHandler->prepare("update courses set  courseName = :courseName, courseDetails = :courseDetails where id= :id");
 			$statement->execute(array(':courseName' => $courseName, ':courseDetails' => $courseDetails, ':id' => $id));
-			$row = $statement->fetchAll();
-			return $row;
+			return true;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 
 	}

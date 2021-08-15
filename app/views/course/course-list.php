@@ -3,15 +3,15 @@
 		<div class="float-left" style="margin-bottom: 40px;"><span><a href="../index.php">Home</a></span></div>
 		<div class="jumbotron text-center" style="margin-top: 80px;">
 			<?php
-			if($data['message']=='deleted') {
-				echo "<div class='alert alert-success' role='alert' id='success'>Student deleted successfully.</div>";
+			if( isset($data['message']) && $data['message']=='deleted') {
+				echo "<div class='alert alert-success' role='alert' id='success'>Course deleted successfully.</div>";
 			}
-			if($data['message']=='updated') {
-				echo "<div class='alert alert-success' role='alert' id='success'>Student details updated successfully.</div>";
+			if(isset($data['message']) && $data['message']=='updated') {
+				echo "<div class='alert alert-success' role='alert' id='success'>Course details updated successfully.</div>";
 			}
 			?>
 			<div class="header" style="padding-bottom: 30px;padding-top: 30px;">
-				<h5 class="text-center">Student Listing</h5>
+				<h5 class="text-center">Course Listing</h5>
 			</div>
 			<div>
 			<table class="table">
@@ -24,12 +24,16 @@
 				</th>
 				<tbody>
 					<?php
-					foreach($data['data'] as $res) {
-						echo '<tr>
-						<td><a href="updateCourseForm?courseId='.$res[0].'">Edit</a></td>
-						<td>'.$res[1].'</td>
-						<td><a href="delete?courseId='.$res[0].'">Delete</a></td>
-						</tr>';					
+					if(isset($data['data']) && gettype($data['data']) =='array'){
+						foreach($data['data'] as $res) {
+							echo '<tr>
+							<td><a href="updateCourseForm?courseId='.$res[0].'">Edit</a></td>
+							<td>'.$res[1].'</td>
+							<td><a href="delete?courseId='.$res[0].'">Delete</a></td>
+							</tr>';					
+						}
+					} else {
+						echo '<tr>Somethig went wrong while retrieving the data</tr>';
 					}
 					?>
 					<tr></tr>

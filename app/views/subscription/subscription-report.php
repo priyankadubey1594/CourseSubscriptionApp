@@ -16,14 +16,19 @@
 				</th>
 				<tbody>
 					<?php
-					foreach($data as $res) {
-						echo '<tr>
-						<td>'.$res[0].' '.$res[1].'</td>
-						<td>'.$res[2].'</td>
-						</tr>';	
+					if(isset($data['data']) && gettype($data['data']) =='array') {
+						foreach($data['data'] as $res) {
+							echo '<tr>
+							<td>'.$res[0].' '.$res[1].'</td>
+							<td>'.$res[2].'</td>
+							</tr>';	
+						}
+					} else {
+						echo "<tr><td>Something went wrong while getting the data</td></tr>";
 					}
+					
 					?>
-					<tr></tr>
+		
 				</tbody>
 			</table>
 		</div>

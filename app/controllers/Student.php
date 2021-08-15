@@ -81,13 +81,17 @@ class Student extends Controller{
 		if(isset($_GET['studentId'])) {
 			$id = $_GET['studentId'];
 			try {
+				$deleted = null;
 				if($this->studentModel->deleteStudent($id)){
-					$res = $this->studentModel->getStudents();
-					if(gettype($res) != 'array') {
-						throw new Exception("Error Processing Request", 1);	
-					}
-					$result = array('message'=>'deleted', 'data' => $res);
+					$deleted = 'deleted';
+				} else{
+					$deleted = 'not deleted';
 				}
+				$res = $this->studentModel->getStudents();
+				if(gettype($res) != 'array') {
+					throw new Exception("Error Processing Request", 1);	
+				}
+				$result = array('message'=>$deleted, 'data' => $res);
 					
 			} catch (Exception $e) {
 				$result = array('message'=>'Error:'.$e->getMessage(), 'data' => $res);
@@ -99,18 +103,19 @@ class Student extends Controller{
 
 	//function to update student details
 	public function update() {
-		echo "triggered";
 		if(isset($_POST)) {
 			try {
+				$updated= null;
 				if($this->studentModel->updateStudent($_POST)){
-					$res = $this->studentModel->getStudents();
-					if(gettype($res) != 'array') {
-						throw new Exception("Error Processing Request", 1);
-						
-					}
-					$result = array('message'=>'updated', 'data' => $res);
+					$updated = 'updated';
+				} else {
+					$updated = 'not updated';
 				}
-				
+				$res = $this->studentModel->getStudents();
+				if(gettype($res) != 'array') {
+					throw new Exception("Error Processing Request", 1);		
+				}
+				$result = array('message'=>$updated, 'data' => $res);
 			} catch (Exception $e) {
 				$result = array('message'=>'Error:'.$e->getMessage, 'data' => $res);
 			}

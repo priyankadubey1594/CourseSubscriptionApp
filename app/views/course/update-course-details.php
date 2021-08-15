@@ -5,41 +5,56 @@
 			<div class="header" style="padding-bottom: 30px;padding-top: 30px;">
 				<h5 class="text-center"> Update Course Details</h5>
 			</div>
+			<?php
+			if(isset($data['message'])){
+				if($data['message'] == 'updated'){
+					echo "<div class='alert alert-success' role='alert' id='success'>Course updated successfully.</div>";
+				} else if($data['message'] == 'not updated'){
+					echo "<div class='alert alert-danger' role='alert' id='success'>Something went wrong while updating the course.</div>";
+				}
+				
+			}
+			?>
 			<div>
 			<form id="courseForm" method="POST" action="update">
 			<?php
-			foreach($data['data'] as $res){
-			  echo '<div class="row">
-			  <input type="hidden" class="form-control" id="courseId" name="courseId" style="width: 70%;" value="'. $res[0].'">
-			  	<div class="col-sm-5">
-				    <label for="courseName">Course Name</label>
-			  	</div>
-			  	<div class="col-sm-7">
-			  		<div class="form-group">
-				    <input type="text" class="form-control" id="courseName" name="courseName" style="width: 70%;" value="'. $res[1].'" minlength="3" required>
-					</div>
-			  	</div>				  	
-			  </div>
-
-			  <div class="row">
-			  	<div class="col-sm-5">
-				    <label for="lastName">Course Details</label>
-			  	</div>
-			  	<div class="col-sm-7">
-			  		<div class="form-group">
-				    <textarea class="form-control" id="courseDetails" name = "courseDetails" style="width: 70%;" minlength = "3" maxlength="100" required>'.$res[2].'</textarea>
-					</div>
-			  	</div>				  	
-			  </div>
-			  <div class="row">
-			  		<div class="col-sm-5"></div>
-			  		<div class="col-sm-7">
+			if(isset($data['data']) && gettype($data['data']) == 'array') {
+				foreach($data['data'] as $res){
+				  echo '<div class="row">
+				  <input type="hidden" class="form-control" id="courseId" name="courseId" style="width: 70%;" value="'. $res[0].'">
+				  	<div class="col-sm-5">
+					    <label for="courseName">Course Name</label>
+				  	</div>
+				  	<div class="col-sm-7">
 				  		<div class="form-group">
-					    <input type="submit" class="form-control btn-default" id="updateCourse" style="width: 70%;" value="Update">
+					    <input type="text" class="form-control" id="courseName" name="courseName" style="width: 70%;" value="'. $res[1].'" minlength="3" required>
 						</div>
-					</div>		  	
-			  </div>';
-			  }
+				  	</div>				  	
+				  </div>
+
+				  <div class="row">
+				  	<div class="col-sm-5">
+					    <label for="lastName">Course Details</label>
+				  	</div>
+				  	<div class="col-sm-7">
+				  		<div class="form-group">
+					    <textarea class="form-control" id="courseDetails" name = "courseDetails" style="width: 70%;" minlength = "3" maxlength="100" required>'.$res[2].'</textarea>
+						</div>
+				  	</div>				  	
+				  </div>
+				  <div class="row">
+				  		<div class="col-sm-5"></div>
+				  		<div class="col-sm-7">
+					  		<div class="form-group">
+						    <input type="submit" class="form-control btn-default" id="updateCourse" style="width: 70%;" value="Update">
+							</div>
+						</div>		  	
+				  </div>';
+				  }
+				} else {
+					echo '<div>Something went wrong.</div>';
+				}
+			
 			  ?>
 			</form>
 		</div>

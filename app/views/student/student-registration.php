@@ -3,8 +3,13 @@
 		<div class="float-left" style="margin-bottom: 40px;"><span><a href="../index.php">Home</a></span></div>
 		<div class="jumbotron text-center" style="margin-top: 80px;">
 			<?php
-			if(isset($data['data']) && $data['data']==true) {
-				echo "<div class='alert alert-success' role='alert' id='success'>Student registered successfully.</div>";
+			if(isset($data['message'])) {
+				if($data['message']=='registered') {
+					echo "<div class='alert alert-success' role='alert' id='success'>Student registered successfully.</div>";
+				} else {
+					echo "<div class='alert alert-danger' role='alert' id='fail'>Something went wrong while adding the student.</div>";
+				}
+				
 			}
 			?>
 			<div class="header" style="padding-bottom: 30px;padding-top: 30px;">

@@ -8,7 +8,7 @@
 			<div>
 			<form id="postForm" method="POST" action="update">
 			<?php
-			if(isset($data['data'])){
+			if(isset($data['data']) && gettype($data['data']) == 'array'){
 				foreach($data['data'] as $res){
 				  echo '<div class="row">
 				  <input type="hidden" class="form-control" id="studentId" name="studentId" style="width: 70%;" value="'. $res[0].'" >

@@ -21,7 +21,7 @@ class StudentModel {
 			$statement->execute(array(':firstName' => $firstName, ':lastName' => $lastName, ':dob' => $dob, ':contact' => $contact));
 			return true;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 	}
 
@@ -33,7 +33,7 @@ class StudentModel {
 			$row = $statement->fetchAll();
 			return $row;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 
 	}
@@ -47,7 +47,7 @@ class StudentModel {
 			//print_r($row);
 			return $row;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 
 	}
@@ -59,7 +59,7 @@ class StudentModel {
 			$statement->execute(array(':id' => $id));
 			return true;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 	}
 
@@ -75,7 +75,7 @@ class StudentModel {
 			$statement->execute(array(':firstName' => $firstName, ':lastName' => $lastName, ':dob' => $dob, ':contact' => $contact, ':id' => $id));
 			return true;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 
 	}

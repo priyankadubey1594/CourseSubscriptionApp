@@ -14,7 +14,7 @@ class SubscriptionModel {
 			$row = $statement->fetchAll();
 			return $row;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 	}
 	
@@ -27,7 +27,7 @@ class SubscriptionModel {
 			$statement->execute(array(':studentId' => $studentId, ':courseId' => $courseId));
 			return true;
 		} catch (PDOException $e) {
-			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
 		}
 	}
 }

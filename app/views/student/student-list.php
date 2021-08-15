@@ -25,15 +25,19 @@
 				</th>
 				<tbody>
 					<?php
-					foreach($data['data'] as $res) {
-						
-							echo '<tr>
-							<td><a href="updateForm?studentId='.$res[0].'">Edit</a></td>
-							<td>'.$res[1].'</td>
-							<td>'.$res[2].'</td>
-							<td><a href="delete?studentId='.$res[0].'">Delete</a></td>
-							</tr>';
-						
+					if(isset($data['data']) && gettype($data['data']) == 'array'){
+						foreach($data['data'] as $res) {
+							
+								echo '<tr>
+								<td><a href="updateForm?studentId='.$res[0].'">Edit</a></td>
+								<td>'.$res[1].'</td>
+								<td>'.$res[2].'</td>
+								<td><a href="delete?studentId='.$res[0].'">Delete</a></td>
+								</tr>';
+							
+						}
+					} else {
+						echo '<div>Something went wrong while getting the data.</div>';
 					}
 					?>
 					<tr></tr>

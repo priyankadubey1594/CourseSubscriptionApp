@@ -12,24 +12,48 @@ class Course extends Controller{
 	public function updateCourseForm() {
 		if(isset($_GET['courseId'])) {
 			$id = $_GET['courseId'];
-			$res = $this->CourseModel->getCourse($id);
-			$result = array('message'=>'found', 'data' => $res);
+			try {
+				$res = $this->CourseModel->getCourse($id);
+				if(gettype($res != 'array')) {
+					throw new Exception("Error Processing Request", 1);
+				}
+				$result = array('message'=>'found', 'data' => $res);
+			} catch (Exception $e) {
+				$result = array('message'=>'Error:'.$e->getMessage(), 'data' => $res);
+			}
 			return $this->view('course/update-course-details', $result);
 		}
+		return $this->view('course/update-course-details');
 	}
 
 	public function addCourse () {
 		//echo "Student registered";
 		if(isset($_POST)) {
-			$res = $this->CourseModel->addCourse($_POST);
-			return $this->view('course/add-course', $res);
+			try {
+				$res = $this->CourseModel->addCourse($_POST);
+				if($res != true) {
+					throw new Exception("Error Processing Request", 1);
+				}
+				$result = array('message'=>'added', 'data' => $res);
+			} catch (Exception $e) {
+				$result = array('message'=>'Error:'.$e->getMessage(), 'data' => $res);
+			}
+			return $this->view('course/add-course', $result);
 		}
+		return $this->view('course/add-course');
 	}
 
 	//function to get student list
 	public function getCourses() {
-		$res = $this->CourseModel->getCourses();
-		$result = array('message'=>'found', 'data' => $res);
+		try {
+			$res = $this->CourseModel->getCourses();
+			if(gettype($res) != 'array') {
+				throw new Exception("Error Processing Request", 1);
+			}
+			$result = array('message'=>'found', 'data' => $res);
+		} catch (Exception $e) {
+			$result = array('message'=>'Error:'.$e->getMessage(), 'data' => $res);
+		}
 		return $this->view('course/course-list',$result);
 	}
 
@@ -37,23 +61,48 @@ class Course extends Controller{
 	public function delete() {
 		if(isset($_GET)) {
 			$id = $_GET['courseId'];
-			$this->CourseModel->deleteCourse($id);
-			$res = $this->CourseModel->getCourses();
-			$result = array('message'=>'deleted', 'data' => $res);
+			try {
+				$deleted =  null;
+				if(!$this->CourseModel->deleteCourse($id)) {
+					$res = $this->CourseModel->getCourses();
+					$deleted = 'Error';
+				} else{
+					$deleted = 'deleted';
+				}
+				$res = $this->CourseModel->getCourses();
+				if(gettype($res) != 'array'){
+					throw new Exception("Error Processing Request", 1);	
+				}
+				$result = array('message'=>$deleted, 'data' => $res);
+			} catch (Exception $e) {
+				$result = array('message'=>'Error:'.$e->getMessage(), 'data' => $res);
+			}
 			return $this->view('course/course-list',$result);
 		}
-		
+		return $this->view('course/course-list');
 	}
 
 	//function to update student details
 	public function update() {
 		if(isset($_POST)) {
-			$this->CourseModel->updateCourse($_POST);
-			$res = $this->CourseModel->getCourses();
-			$result = array('message'=>'updated', 'data' => $res);
+			try {
+				$updated = null;
+				if(!$this->CourseModel->updateCourse($_POST)) {
+					$updated = 'Error';
+				} else {
+					$updated = 'updated';
+				}
+				$res = $this->CourseModel->getCourses();
+				if(gettype($res) != 'array') {
+					throw new Exception("Error Processing Request", 1);
+				}
+				$result = array('message'=>$updated, 'data' => $res);
+			} catch (Exception $e) {
+				$result = array('message'=>'Error:'.$e->getMessage(), 'data' => $res);
+			}
 			return $this->view('course/course-list',$result);
 		}
-		
+		return $this->view('course/course-list');
 	}
 }
 ?>
