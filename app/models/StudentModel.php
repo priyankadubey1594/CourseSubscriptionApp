@@ -16,10 +16,15 @@ class StudentModel {
 		try {
 			// Set SQL
 			$sql = 'INSERT INTO students (firstName, lastName, dob, contact, createdOn) VALUES (:firstName, :lastName, :dob, :contact, NOW())';
+
 			// Prepare query
 			$statement = $this->dbHandler->prepare($sql);
+			$statement->bindValue(":firstName", $firstName, PDO::PARAM_STR);
+			$statement->bindValue(":lastName", $lastName, PDO::PARAM_STR);
+			$statement->bindValue(":dob", $dob, PDO::PARAM_STR);
+			$statement->bindValue(":contact", $contact, PDO::PARAM_INT);
 			// Execute query
-			$statement->execute(array(':firstName' => $firstName, ':lastName' => $lastName, ':dob' => $dob, ':contact' => $contact));
+			$statement->execute();
 			return true;
 		} catch (PDOException $e) {
 			return 'Error: ' . $e->getMessage();
@@ -43,7 +48,8 @@ class StudentModel {
 	public function getStudent($id) {
 		try {
 			$statement = $this->dbHandler->prepare("select id, firstName, lastName, dob, contact from students where id = :id");
-			$statement->execute(array(':id' => $id));
+			$statement->bindValue(":id", $id, PDO::PARAM_INT);
+			$statement->execute();
 			$row = $statement->fetchAll();
 			//print_r($row);
 			return $row;
@@ -57,7 +63,8 @@ class StudentModel {
 	public function deleteStudent($id) {
 		try {
 			$statement = $this->dbHandler->prepare("delete from students where id = :id");
-			$statement->execute(array(':id' => $id));
+			$statement->bindValue(":id", $id, PDO::PARAM_INT);
+			$statement->execute();
 			return true;
 		} catch (PDOException $e) {
 			return 'Error: ' . $e->getMessage();
@@ -72,8 +79,15 @@ class StudentModel {
 		$dob = (!empty($formData['dob']) ? $formData['dob'] : '');
 		$contact = (!empty($formData['contact']) ? $formData['contact'] : 0);
 		try {
-			$statement = $this->dbHandler->prepare("update students set  firstName = :firstName, lastName = :lastName,  dob = :dob, contact = :contact where id= :id");
-			$statement->execute(array(':firstName' => $firstName, ':lastName' => $lastName, ':dob' => $dob, ':contact' => $contact, ':id' => $id));
+			$sql = "update students set  firstName = :firstName, lastName = :lastName,  dob = :dob, contact = :contact where id= :id";
+			$statement = $this->dbHandler->prepare($sql);
+			$statement->bindValue(":firstName", $firstName, PDO::PARAM_STR);
+			$statement->bindValue(":lastName", $lastName, PDO::PARAM_STR);
+			$statement->bindValue(":dob", $dob, PDO::PARAM_STR);
+			$statement->bindValue(":contact", $contact, PDO::PARAM_INT);
+			$statement->bindValue(":id", $id, PDO::PARAM_INT);
+			// Execute query
+			$statement->execute();
 			return true;
 		} catch (PDOException $e) {
 			return 'Error: ' . $e->getMessage();

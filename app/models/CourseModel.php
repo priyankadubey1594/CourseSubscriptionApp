@@ -15,7 +15,10 @@ class CourseModel {
 			// Prepare query
 			$statement = $this->dbHandler->prepare($sql);
 			// Execute query
-			$statement->execute(array(':courseName' => $courseName, ':courseDetails' => $courseDetails));
+			$statement->bindValue(":courseName", $courseName, PDO::PARAM_STR);
+			$statement->bindValue(":courseDetails", $courseDetails, PDO::PARAM_STR);
+			$statement->execute();
+			//$statement->execute(array(':courseName' => $courseName, ':courseDetails' => $courseDetails));
 			return true;
 		} catch (PDOException $e) {
 			return 'Error: ' . $e->getMessage();
@@ -39,7 +42,8 @@ class CourseModel {
 	public function getCourse($id) {
 		try {
 			$statement = $this->dbHandler->prepare("select id, courseName, courseDetails from courses where id = :id");
-			$statement->execute(array(':id' => $id));
+			$statement->bindValue(":id", $id, PDO::PARAM_INT);
+			$statement->execute();
 			$row = $statement->fetchAll();
 			return $row;
 		} catch (PDOException $e) {
@@ -52,7 +56,8 @@ class CourseModel {
 	public function deleteCourse($id) {
 		try {
 			$statement = $this->dbHandler->prepare("delete from courses where id = :id");
-			$statement->execute(array(':id' => $id));
+			$statement->bindValue(":id", $id, PDO::PARAM_INT);
+			$statement->execute();
 			return true;
 		} catch (PDOException $e) {
 			return 'Error: ' . $e->getMessage();
@@ -65,8 +70,13 @@ class CourseModel {
 		$courseName = (!empty($formData['courseName']) ? $formData['courseName'] : '');
 		$courseDetails = (!empty($formData['courseDetails']) ? $formData['courseDetails'] : '');
 		try {
-			$statement = $this->dbHandler->prepare("update courses set  courseName = :courseName, courseDetails = :courseDetails where id= :id");
-			$statement->execute(array(':courseName' => $courseName, ':courseDetails' => $courseDetails, ':id' => $id));
+			$sql = "update courses set  courseName = :courseName, courseDetails = :courseDetails where id= :id";
+			$statement = $this->dbHandler->prepare($sql);
+			$statement->bindValue(":courseName", $courseName, PDO::PARAM_STR);
+			$statement->bindValue(":courseDetails", $courseDetails, PDO::PARAM_STR);
+			$statement->bindValue(":id", $id, PDO::PARAM_INT);
+			$statement->execute();
+			//$statement->execute(array(':courseName' => $courseName, ':courseDetails' => $courseDetails, ':id' => $id));
 			return true;
 		} catch (PDOException $e) {
 			return 'Error: ' . $e->getMessage();

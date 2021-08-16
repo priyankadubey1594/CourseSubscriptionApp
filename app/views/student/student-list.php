@@ -1,6 +1,6 @@
 <?php require_once APPROOT.'/views/includes/header.php';?>
 	<div class="container">
-		<div class="float-left" style="margin-bottom: 40px;"><span><a href="../index.php">Home</a></span></div>
+		<div class="float-left home-style" style="margin-bottom: 40px;"><span><a href="../index.php">Home</a></span></div>
 		<div class="jumbotron text-center" style="margin-top: 80px;">
 			<?php
 			if(isset($data['message'])) {
