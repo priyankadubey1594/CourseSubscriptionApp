@@ -42,7 +42,9 @@ class SubscriptionModel {
 		$courseId = (!empty($formData['courseId']) ? $formData['courseId'] : '');
 		try {
 			$statement = $this->dbHandler->prepare("insert into subscriptions (studentId, courseId, subscribedOn) values(:studentId, :courseId, now())");
-			$statement->execute(array(':studentId' => $studentId, ':courseId' => $courseId));
+			$statement->bindValue(":studentId", $studentId, PDO::PARAM_INT);
+			$statement->bindValue(":courseId", $courseId, PDO::PARAM_INT);
+			$statement->execute();
 			return true;
 		} catch (PDOException $e) {
 			return 'Error: ' . $e->getMessage();
