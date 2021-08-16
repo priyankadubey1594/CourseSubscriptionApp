@@ -56,7 +56,13 @@ class Subscription extends Controller{
 				if($res != true) {
 					throw new Exception("Error Processing Request", 1);
 				}
-				$result = array('message'=>'subscribed', 'data' => $res);
+				$students = $this->studentModel->getStudents();
+				$courses = $this->courseModel->getCourses();
+				if(gettype($students) == 'array' && gettype($courses) == 'array') {
+					$result = array('message' => 'subscribed','students'=>$students, 'courses' => $courses);
+				} else{
+					throw new Exception("Error Processing Request", 1);
+				}
 			} catch (Exception $e) {
 				$result = array('message'=>'Error:'.$e->getMessage(), 'data' => $res);
 			}

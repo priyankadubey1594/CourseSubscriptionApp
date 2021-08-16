@@ -6,7 +6,8 @@ class StudentModel {
 		$this->dbHandler = $db->getDb();
 	}
 
-	public function register ($formData) {	
+	//function to regiter the student
+	public function register ($formData) {
 		$firstName = (!empty($formData['firstName']) ? $formData['firstName'] : '');
 		$lastName = (!empty($formData['lastName']) ? $formData['lastName'] : '');
 		$dob = (!empty($formData['dob']) ? $formData['dob'] : '');
