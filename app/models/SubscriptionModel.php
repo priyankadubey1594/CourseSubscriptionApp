@@ -7,13 +7,31 @@ class SubscriptionModel {
 	}
 
 	//function to get student list
-	public function report() {
+	public function report($leftLimit, $rightLimit) {
 		try {
-			$statement = $this->dbHandler->prepare("select s.firstName, s.lastName, c.courseName from  students s inner join subscriptions sb on s.id = sb.studentId inner join courses c on sb.courseId = c.id");
+			$statement = $this->dbHandler->prepare("select s.firstName, s.lastName, c.courseName from  students s inner join subscriptions sb on s.id = sb.studentId inner join courses c on sb.courseId = c.id limit  :leftLimit, :rightLimit");
+			$statement->bindValue(":leftLimit", $leftLimit, PDO::PARAM_INT);
+        	$statement->bindValue(":rightLimit", $rightLimit, PDO::PARAM_INT);
 			$statement->execute();
 			$row = $statement->fetchAll();
-			return $row;
+			$count = $this->getTotalItemCount();
+			return array('row' => $row, 'count' =>$count);
 		} catch (PDOException $e) {
+			echo 'Error: ' . $e->getMessage();
+			return 'Error: ' . $e->getMessage();
+		}
+	}
+	
+	//function to get student list
+	public function getTotalItemCount() {
+		try {
+			$statement = $this->dbHandler->prepare("select s.firstName, s.lastName, c.courseName from  students s inner join subscriptions sb on s.id = sb.studentId inner join courses c on sb.courseId = c.id");
+			
+			$statement->execute();
+			$rowCount = $statement->rowCount();
+			return $rowCount;
+		} catch (PDOException $e) {
+			echo 'Error: ' . $e->getMessage();
 			return 'Error: ' . $e->getMessage();
 		}
 	}

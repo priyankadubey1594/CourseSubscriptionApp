@@ -33,8 +33,8 @@ class Student extends Controller{
 		//echo "Student registered";
 		if(isset($_POST)) {
 			$res = $this->studentModel->register($_POST);
-				$res = $this->studentModel->register($_POST);
-				$registered = null;
+			$registered = null;
+			$res = $this->studentModel->register($_POST);
 				if($res  === true){
 					$registered = "registered";
 				} else {

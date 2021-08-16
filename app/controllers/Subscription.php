@@ -12,7 +12,32 @@ class Subscription extends Controller{
 	//method to get report
 	public function report () {
 		try {
-			$res = $this->subscriptionModel->report();
+			$pageNumber = 1;
+			$itemsPerPage = 3;
+			if(isset($_GET['pageNumber']) && isset($_GET['itemsPerPage'])) {
+				$pageNumber = $_GET['pageNumber'];
+				$itemsPerPage = $_GET['itemsPerPage'];
+
+			}
+			$leftlimit = $itemsPerPage * ($pageNumber -1);
+			$rightlimit = $itemsPerPage;
+			$res = $this->subscriptionModel->report($leftlimit, $rightlimit);
+			if(gettype($res) != 'array') {
+				throw new Exception("Error Processing Request", 1);	
+			}
+			$result = array('message' => 'found','data'=>$res);
+		} catch (Exception $e) {
+			$result = array('message' => 'Error:'.$e->getMessage(),'data'=>$res);
+		}
+		return $this->view('subscription/subscription-report', $result);
+	}
+
+ // function to get total items
+	public function getTotalItemCount () {
+		try {
+			
+			$res = $this->subscriptionModel->getTotalItemCount();
+			echo gettype($res);
 			if(gettype($res) != 'array') {
 				throw new Exception("Error Processing Request", 1);	
 			}

@@ -15,3 +15,8 @@
 .custom-width2 {
 	width: 80%;
 }
+.home-style {
+	margin-bottom: 40px; 
+	position: relative;
+	top:-50px
+}
